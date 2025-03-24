@@ -6,7 +6,7 @@ import { user } from "../store/index.js";
 export function ProfilePage() {
   const loggedIn = user.loggedIn();
   const userData = user.getUser();
-  const { username, email, bio } = userData;
+  const { username, email, bio } = userData || {};
   return /* HTML */ `
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
@@ -29,7 +29,7 @@ export function ProfilePage() {
                     type="text"
                     id="username"
                     name="username"
-                    value="${username}"
+                    value="${username ?? ""}"
                     class="w-full p-2 border rounded"
                   />
                 </div>
@@ -43,7 +43,7 @@ export function ProfilePage() {
                     type="email"
                     id="email"
                     name="email"
-                    value="${email}"
+                    value="${email ?? ""}"
                     class="w-full p-2 border rounded"
                   />
                 </div>
@@ -59,7 +59,7 @@ export function ProfilePage() {
                     rows="4"
                     class="w-full p-2 border rounded"
                   >
-${bio}</textarea
+${bio ?? ""}</textarea
                   >
                 </div>
                 <button
