@@ -6,7 +6,7 @@ import { user } from "../store/index.js";
 export function ProfilePage() {
   const loggedIn = !!user.getUser();
   const userData = user.getUser();
-  const { username, email, description } = userData;
+  const { username, email, bio } = userData;
   return /* HTML */ `
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
@@ -18,7 +18,7 @@ export function ProfilePage() {
               <h2 class="text-2xl font-bold text-center text-blue-600 mb-8">
                 내 프로필
               </h2>
-              <form>
+              <form id="profile-update-form">
                 <div class="mb-4">
                   <label
                     for="username"
@@ -59,7 +59,7 @@ export function ProfilePage() {
                     rows="4"
                     class="w-full p-2 border rounded"
                   >
-${description}</textarea
+${bio}</textarea
                   >
                 </div>
                 <button

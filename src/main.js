@@ -48,8 +48,8 @@ const $root = $("#root");
 $root.addEventListener("click", (e) => {
   if (e.target.id === "logout") {
     user.logout();
-    window.history.pushState(null, "", "/login");
-    render();
+
+    navigate("/login");
   }
 });
 
@@ -58,17 +58,28 @@ $root.addEventListener("submit", (e) => {
 
   const $form = e.target;
 
-  const username = $form.querySelector("#username").value;
-  const password = $form.querySelector("#password").value;
+  if ($form.id === "login-form") {
+    const username = $form.querySelector("#username").value;
+    const password = $form.querySelector("#password").value;
 
-  if (!username || !password) {
-    alert("아이디와 비밀번호를 입력해주세요.");
-    return;
+    if (!username || !password) {
+      alert("아이디와 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    user.login(username);
+
+    navigate("/");
   }
 
-  user.login(username);
-  window.history.pushState(null, "", "/");
-  render();
+  if ($form.id === "profile-update-form") {
+    const username = $form.querySelector("#username").value;
+    const email = $form.querySelector("#email").value;
+    const bio = $form.querySelector("#bio").value;
+
+    user.setUser({ username, email, bio });
+    render();
+  }
 });
 
 function render() {

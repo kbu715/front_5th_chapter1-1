@@ -14,8 +14,8 @@ export const user = {
     localStorage.setItem("user", JSON.stringify(newUserData));
   },
 
-  login(username, email = "", description = "") {
-    const user = { username, email, description };
+  login(username, email = "", bio = "") {
+    const user = { username, email, bio };
     localStorage.setItem("user", JSON.stringify(user));
     return user;
   },
