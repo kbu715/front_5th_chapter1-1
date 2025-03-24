@@ -1,12 +1,20 @@
 export function Nav({ loggedIn }) {
   const pathname = window.location.pathname;
+  const hash = window.location.hash;
+
+  const getActiveClass = (path) => {
+    if (hash) {
+      return `#${path}` === hash;
+    }
+    return path === pathname;
+  };
 
   const navItems = loggedIn
     ? /* HTML */ `
         <li>
           <a
             href="/profile"
-            class="${pathname === "/profile"
+            class="${getActiveClass("/profile")
               ? "text-blue-600"
               : "text-gray-600"}"
             >프로필</a
@@ -20,7 +28,9 @@ export function Nav({ loggedIn }) {
         <li>
           <a
             href="/login"
-            class="${pathname === "/login" ? "text-blue-600" : "text-gray-600"}"
+            class="${getActiveClass("/login")
+              ? "text-blue-600"
+              : "text-gray-600"}"
             >로그인</a
           >
         </li>
@@ -32,7 +42,7 @@ export function Nav({ loggedIn }) {
         <li>
           <a
             href="/"
-            class="${pathname === "/" ? "text-blue-600" : "text-gray-600"}"
+            class="${getActiveClass("/") ? "text-blue-600" : "text-gray-600"}"
             >홈</a
           >
         </li>
