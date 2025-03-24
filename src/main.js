@@ -82,26 +82,27 @@ $root.addEventListener("submit", (e) => {
   }
 });
 
-function render() {
+function App() {
   const pathname = window.location.pathname;
   const route = routes.find((route) => route.path === pathname);
   const loggedIn = user.loggedIn();
 
-  if (route.authRequired && !loggedIn) {
+  if (route?.authRequired && !loggedIn) {
     window.history.pushState(null, "", "/login");
-    $root.innerHTML = LoginPage();
-    return;
+    return LoginPage();
   }
 
   if (loggedIn && pathname === "/login") {
     window.history.pushState(null, "", "/");
-    $root.innerHTML = MainPage();
-    return;
+    return MainPage();
   }
 
   const Comp = route ? route.component : ErrorPage;
+  return Comp();
+}
 
-  $root.innerHTML = Comp();
+function render() {
+  $root.innerHTML = App();
 }
 
 render();
