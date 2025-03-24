@@ -3,16 +3,28 @@ import { ProfilePage } from "./pages/ProfilePage";
 import { LoginPage } from "./pages/LoginPage";
 import { ErrorPage } from "./pages/ErrorPage";
 import { $ } from "./dom";
+import { user } from "./store";
 
-const routes = {
-  "/": MainPage,
-  "/profile": ProfilePage,
-  "/login": LoginPage,
-  notFound: ErrorPage,
-};
+const routes = [
+  {
+    path: "/",
+    component: MainPage,
+    authRequired: false,
+  },
+  {
+    path: "/profile",
+    component: ProfilePage,
+    authRequired: true,
+  },
+  {
+    path: "/login",
+    component: LoginPage,
+    authRequired: false,
+  },
+];
 
 function navigate(pathname) {
-  window.history.pushState({}, "", pathname);
+  window.history.pushState(null, "", pathname);
   render();
 }
 
@@ -31,11 +43,43 @@ document.addEventListener("click", (e) => {
   }
 });
 
-function render() {
-  const $root = $("#root");
+const $root = $("#root");
 
+$root.addEventListener("click", (e) => {
+  if (e.target.id === "logout") {
+    user.logout();
+    window.history.pushState(null, "", "/login");
+    render();
+  }
+});
+
+$root.addEventListener("submit", (e) => {
+  e.preventDefault();
+
+  const $form = e.target;
+
+  const username = $form.querySelector("#username").value;
+  const password = $form.querySelector("#password").value;
+
+  if (!username || !password) {
+    alert("아이디와 비밀번호를 입력해주세요.");
+    return;
+  }
+
+  user.login(username);
+  window.history.pushState(null, "", "/");
+  render();
+});
+
+function render() {
   const pathname = window.location.pathname;
-  const comp = routes[pathname] || routes.notFound;
+  const route = routes.find((route) => route.path === pathname);
+
+  if (route.authRequired && !user.getUser()) {
+    window.history.pushState(null, "", "/login");
+    $root.innerHTML = LoginPage();
+  }
+  const comp = route ? route.component : ErrorPage;
 
   $root.innerHTML = comp();
 }
