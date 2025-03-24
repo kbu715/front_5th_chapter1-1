@@ -4,7 +4,7 @@ import { Nav } from "../components/Nav.js";
 import { user } from "../store/index.js";
 
 export function ProfilePage() {
-  const loggedIn = !!user.getUser();
+  const loggedIn = user.loggedIn;
   const userData = user.getUser();
   const { username, email, bio } = userData;
   return /* HTML */ `

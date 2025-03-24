@@ -86,7 +86,7 @@ function render() {
   const pathname = window.location.pathname;
   const route = routes.find((route) => route.path === pathname);
 
-  if (route.authRequired && !user.getUser()) {
+  if (route.authRequired && !user.loggedIn) {
     window.history.pushState(null, "", "/login");
     $root.innerHTML = LoginPage();
   }
