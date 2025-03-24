@@ -17,33 +17,6 @@ const navigate = (pathname) => {
 
 const $root = $("#root");
 
-const render = () => {
-  const { hash } = location;
-
-  const route = routes.find((route) => route.hash === hash);
-  const loggedIn = user.loggedIn();
-
-  if (!route) {
-    $root.innerHTML = ErrorPage();
-  }
-
-  if (route.requiresAuth && !loggedIn) {
-    location.hash = "#/login";
-    $root.innerHTML = LoginPage();
-    return;
-  }
-
-  if (hash === "#/login" && loggedIn) {
-    location.hash = "#/";
-    $root.innerHTML = MainPage();
-    return;
-  }
-
-  $root.innerHTML = route.component();
-};
-
-window.addEventListener("hashchange", render);
-
 $root.addEventListener("click", (e) => {
   if (e.target && e.target.nodeName === "A") {
     e.preventDefault();
@@ -71,7 +44,7 @@ $root.addEventListener("submit", (e) => {
     render();
   }
 
-  if (e.target && e.target.id === "profile-update-form") {
+  if (e.target && e.target.id === "profile-form") {
     e.preventDefault();
     const username = e.target.querySelector("#username").value;
     const email = e.target.querySelector("#email").value;
@@ -82,4 +55,33 @@ $root.addEventListener("submit", (e) => {
   }
 });
 
+const App = () => {
+  const { hash } = location;
+
+  const route = routes.find((route) => route.hash === hash);
+  const loggedIn = user.loggedIn();
+
+  if (!route) {
+    return ErrorPage();
+  }
+
+  if (route?.authRequired && !loggedIn) {
+    location.hash = "#/login";
+    return LoginPage();
+  }
+
+  if (hash === "#/login" && loggedIn) {
+    location.hash = "#/";
+    return MainPage();
+  }
+
+  return route?.component();
+};
+
+const render = () => {
+  $root.innerHTML = App();
+};
+
 render();
+
+window.addEventListener("hashchange", render);

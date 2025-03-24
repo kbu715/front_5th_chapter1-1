@@ -15,7 +15,7 @@ export function Nav({ loggedIn }) {
           <a
             href="/profile"
             class="${getActiveClass("/profile")
-              ? "text-blue-600"
+              ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >프로필</a
           >
@@ -29,7 +29,7 @@ export function Nav({ loggedIn }) {
           <a
             href="/login"
             class="${getActiveClass("/login")
-              ? "text-blue-600"
+              ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >로그인</a
           >
@@ -42,7 +42,9 @@ export function Nav({ loggedIn }) {
         <li>
           <a
             href="/"
-            class="${getActiveClass("/") ? "text-blue-600" : "text-gray-600"}"
+            class="${getActiveClass("/")
+              ? "text-blue-600 font-bold"
+              : "text-gray-600"}"
             >홈</a
           >
         </li>

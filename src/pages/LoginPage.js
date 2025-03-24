@@ -8,8 +8,16 @@ export function LoginPage() {
         <form id="login-form">
           <div class="mb-4">
             <input
-              type="text"
               id="username"
+              name="username"
+              type="text"
+              placeholder="사용자 이름"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
               placeholder="이메일 또는 전화번호"
               class="w-full p-2 border rounded"
             />
