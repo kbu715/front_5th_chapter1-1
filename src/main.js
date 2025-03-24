@@ -86,13 +86,14 @@ function render() {
   const pathname = window.location.pathname;
   const route = routes.find((route) => route.path === pathname);
 
-  if (route.authRequired && !user.loggedIn) {
+  if (route.authRequired && !user.loggedIn()) {
     window.history.pushState(null, "", "/login");
     $root.innerHTML = LoginPage();
   }
-  const comp = route ? route.component : ErrorPage;
 
-  $root.innerHTML = comp();
+  const Comp = route ? route.component : ErrorPage;
+
+  $root.innerHTML = Comp();
 }
 
 render();

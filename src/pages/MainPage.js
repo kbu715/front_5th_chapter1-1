@@ -4,7 +4,7 @@ import { Nav } from "../components/Nav.js";
 import { user } from "../store/index.js";
 
 export function MainPage() {
-  const loggedIn = user.loggedIn;
+  const loggedIn = user.loggedIn();
   return /* HTML */ `
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
