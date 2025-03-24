@@ -9,6 +9,7 @@ export function LoginPage() {
           <div class="mb-4">
             <input
               type="text"
+              id="username"
               placeholder="이메일 또는 전화번호"
               class="w-full p-2 border rounded"
             />
@@ -16,6 +17,7 @@ export function LoginPage() {
           <div class="mb-6">
             <input
               type="password"
+              id="password"
               placeholder="비밀번호"
               class="w-full p-2 border rounded"
             />

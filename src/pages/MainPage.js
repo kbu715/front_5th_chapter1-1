@@ -1,12 +1,14 @@
 import { Header } from "../components/Header.js";
 import { Footer } from "../components/Footer.js";
 import { Nav } from "../components/Nav.js";
+import { user } from "../store/index.js";
 
 export function MainPage() {
+  const loggedIn = !!user.getUser();
   return /* HTML */ `
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
-        ${Header()} ${Nav()}
+        ${Header()} ${Nav({ loggedIn })}
 
         <main class="p-4">
           <div class="mb-4 bg-white rounded-lg shadow p-4">
