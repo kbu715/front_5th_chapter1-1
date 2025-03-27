@@ -48,3 +48,7 @@ $root.addEventListener("submit", (e) => {
     user.setUser({ username, email, bio });
   }
 });
+
+window.addEventListener("error", () => {
+  router.push(ROUTES_MAP.NOT_FOUND);
+});
