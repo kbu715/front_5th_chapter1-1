@@ -1,20 +1,18 @@
-export function Nav({ loggedIn }) {
-  const pathname = window.location.pathname;
-  const hash = window.location.hash;
+import { ROUTES_MAP } from "../router/routes";
+import { user } from "../store";
 
-  const getActiveClass = (path) => {
-    if (hash) {
-      return `#${path}` === hash;
-    }
-    return path === pathname;
-  };
+export function Nav() {
+  const loggedIn = user.loggedIn();
+  const currentPathname = window.location.pathname;
+
+  const getActiveClassName = (pathname) => currentPathname === pathname;
 
   const navItems = loggedIn
     ? /* HTML */ `
         <li>
           <a
-            href="/profile"
-            class="${getActiveClass("/profile")
+            href=${ROUTES_MAP.PROFILE}
+            class="${getActiveClassName(ROUTES_MAP.PROFILE)
               ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >프로필</a
@@ -27,8 +25,8 @@ export function Nav({ loggedIn }) {
     : /* HTML */ `
         <li>
           <a
-            href="/login"
-            class="${getActiveClass("/login")
+            href=${ROUTES_MAP.LOGIN}
+            class="${getActiveClassName(ROUTES_MAP.LOGIN)
               ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >로그인</a
@@ -41,8 +39,8 @@ export function Nav({ loggedIn }) {
       <ul class="flex justify-around">
         <li>
           <a
-            href="/"
-            class="${getActiveClass("/")
+            href=${ROUTES_MAP.MAIN}
+            class="${getActiveClassName(ROUTES_MAP.MAIN)
               ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >홈</a
