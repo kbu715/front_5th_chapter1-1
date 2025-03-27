@@ -1,16 +1,82 @@
-(function(){const e=document.createElement("link").relList;if(e&&e.supports&&e.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))l(s);new MutationObserver(s=>{for(const n of s)if(n.type==="childList")for(const d of n.addedNodes)d.tagName==="LINK"&&d.rel==="modulepreload"&&l(d)}).observe(document,{childList:!0,subtree:!0});function o(s){const n={};return s.integrity&&(n.integrity=s.integrity),s.referrerPolicy&&(n.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?n.credentials="include":s.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function l(s){if(s.ep)return;s.ep=!0;const n=o(s);fetch(s.href,n)}})();function u(){return`
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))r(o);new MutationObserver(o=>{for(const a of o)if(a.type==="childList")for(const i of a.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function s(o){const a={};return o.integrity&&(a.integrity=o.integrity),o.referrerPolicy&&(a.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?a.credentials="include":o.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function r(o){if(o.ep)return;o.ep=!0;const a=s(o);fetch(o.href,a)}})();const m=e=>document.querySelector(e),n={loggedIn(){return!!this.getUser()},getUser(){const e=localStorage.getItem("user");return e?JSON.parse(e):null},setUser(e){const s={...this.getUser(),...e};localStorage.setItem("user",JSON.stringify(s))},login(e,t="",s=""){const r={username:e,email:t,bio:s};return localStorage.setItem("user",JSON.stringify(r)),r},logout(){localStorage.removeItem("user")}};function f(){return`
+    <main class="bg-gray-100 flex items-center justify-center min-h-screen">
+      <div
+        class="bg-white p-8 rounded-lg shadow-md w-full text-center"
+        style="max-width: 480px"
+      >
+        <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
+        <p class="text-4xl font-bold text-gray-800 mb-4">404</p>
+        <p class="text-xl text-gray-600 mb-8">페이지를 찾을 수 없습니다</p>
+        <p class="text-gray-600 mb-8">
+          요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.
+        </p>
+        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
+          홈으로 돌아가기
+        </a>
+      </div>
+    </main>
+  `}function g(){return`
+    <main class="bg-gray-100 flex items-center justify-center min-h-screen">
+      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">
+          항해플러스
+        </h1>
+        <form id="login-form">
+          <div class="mb-4">
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="사용자 이름"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div class="mb-4">
+            <input
+              type="text"
+              placeholder="이메일 또는 전화번호"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <div class="mb-6">
+            <input
+              type="password"
+              id="password"
+              placeholder="비밀번호"
+              class="w-full p-2 border rounded"
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-blue-600 text-white p-2 rounded font-bold"
+          >
+            로그인
+          </button>
+        </form>
+        <div class="mt-4 text-center">
+          <a href="#" class="text-blue-600 text-sm">비밀번호를 잊으셨나요?</a>
+        </div>
+        <hr class="my-6" />
+        <div class="text-center">
+          <button class="bg-green-500 text-white px-4 py-2 rounded font-bold">
+            새 계정 만들기
+          </button>
+        </div>
+      </div>
+    </main>
+  `}function c(){return`
     <header class="bg-blue-600 text-white p-4 sticky top-0">
       <h1 class="text-2xl font-bold">항해플러스</h1>
     </header>
-  `}function b(){return`
+  `}function p(){return`
     <footer class="bg-gray-200 p-4 text-center">
       <p>&copy; 2024 항해플러스. All rights reserved.</p>
     </footer>
-  `}function p({loggedIn:t}){const e=window.location.pathname,o=window.location.hash,l=n=>o?`#${n}`===o:n===e,s=t?`
+  `}function b(){const e=n.loggedIn(),t=window.location.pathname,s=o=>t===o,r=e?`
         <li>
           <a
-            href="/profile"
-            class="${l("/profile")?"text-blue-600 font-bold":"text-gray-600"}"
+            href=${l.PROFILE}
+            class="${s(l.PROFILE)?"text-blue-600 font-bold":"text-gray-600"}"
             >프로필</a
           >
         </li>
@@ -20,8 +86,8 @@
       `:`
         <li>
           <a
-            href="/login"
-            class="${l("/login")?"text-blue-600 font-bold":"text-gray-600"}"
+            href=${l.LOGIN}
+            class="${s(l.LOGIN)?"text-blue-600 font-bold":"text-gray-600"}"
             >로그인</a
           >
         </li>
@@ -30,18 +96,18 @@
       <ul class="flex justify-around">
         <li>
           <a
-            href="/"
-            class="${l("/")?"text-blue-600 font-bold":"text-gray-600"}"
+            href=${l.MAIN}
+            class="${s(l.MAIN)?"text-blue-600 font-bold":"text-gray-600"}"
             >홈</a
           >
         </li>
-        ${s}
+        ${r}
       </ul>
     </nav>
-  `}const r={loggedIn(){return!!this.getUser()},getUser(){const t=localStorage.getItem("user");return t?JSON.parse(t):null},setUser(t){const o={...this.getUser(),...t};localStorage.setItem("user",JSON.stringify(o))},login(t,e="",o=""){const l={username:t,email:e,bio:o};return localStorage.setItem("user",JSON.stringify(l)),l},logout(){localStorage.removeItem("user")}};function m(){const t=r.loggedIn();return`
+  `}function h(){return`
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
-        ${u()} ${p({loggedIn:t})}
+        ${c()} ${b()}
 
         <main class="p-4">
           <div class="mb-4 bg-white rounded-lg shadow p-4">
@@ -157,14 +223,14 @@
           </div>
         </main>
 
-        ${b()}
+        ${p()}
       </div>
     </div>
-  `}function g(){const t=r.loggedIn(),e=r.getUser(),{username:o,email:l,bio:s}=e||{};return`
+  `}function v(){const e=n.getUser(),{username:t,email:s,bio:r}=e||{};return`
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
         <div class="max-w-md w-full">
-          ${u()} ${p({loggedIn:t})}
+          ${c()} ${b()}
 
           <main class="p-4">
             <div class="bg-white p-8 rounded-lg shadow-md">
@@ -182,7 +248,7 @@
                     type="text"
                     id="username"
                     name="username"
-                    value="${o??""}"
+                    value="${t??""}"
                     class="w-full p-2 border rounded"
                   />
                 </div>
@@ -196,7 +262,7 @@
                     type="email"
                     id="email"
                     name="email"
-                    value="${l??""}"
+                    value="${s??""}"
                     class="w-full p-2 border rounded"
                   />
                 </div>
@@ -212,7 +278,7 @@
                     rows="4"
                     class="w-full p-2 border rounded"
                   >
-${s??""}</textarea
+${r??""}</textarea
                   >
                 </div>
                 <button
@@ -225,74 +291,8 @@ ${s??""}</textarea
             </div>
           </main>
 
-          ${b()}
+          ${p()}
         </div>
       </div>
     </div>
-  `}function f(){return`
-    <main class="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">
-          항해플러스
-        </h1>
-        <form id="login-form">
-          <div class="mb-4">
-            <input
-              id="username"
-              name="username"
-              type="text"
-              placeholder="사용자 이름"
-              class="w-full p-2 border rounded"
-            />
-          </div>
-          <div class="mb-4">
-            <input
-              type="text"
-              placeholder="이메일 또는 전화번호"
-              class="w-full p-2 border rounded"
-            />
-          </div>
-          <div class="mb-6">
-            <input
-              type="password"
-              id="password"
-              placeholder="비밀번호"
-              class="w-full p-2 border rounded"
-            />
-          </div>
-          <button
-            type="submit"
-            class="w-full bg-blue-600 text-white p-2 rounded font-bold"
-          >
-            로그인
-          </button>
-        </form>
-        <div class="mt-4 text-center">
-          <a href="#" class="text-blue-600 text-sm">비밀번호를 잊으셨나요?</a>
-        </div>
-        <hr class="my-6" />
-        <div class="text-center">
-          <button class="bg-green-500 text-white px-4 py-2 rounded font-bold">
-            새 계정 만들기
-          </button>
-        </div>
-      </div>
-    </main>
-  `}function v(){return`
-    <main class="bg-gray-100 flex items-center justify-center min-h-screen">
-      <div
-        class="bg-white p-8 rounded-lg shadow-md w-full text-center"
-        style="max-width: 480px"
-      >
-        <h1 class="text-2xl font-bold text-blue-600 mb-4">항해플러스</h1>
-        <p class="text-4xl font-bold text-gray-800 mb-4">404</p>
-        <p class="text-xl text-gray-600 mb-8">페이지를 찾을 수 없습니다</p>
-        <p class="text-gray-600 mb-8">
-          요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.
-        </p>
-        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
-          홈으로 돌아가기
-        </a>
-      </div>
-    </main>
-  `}const h=t=>document.querySelector(t),x=[{path:"/",component:m,authRequired:!1},{path:"/profile",component:g,authRequired:!0},{path:"/login",component:f,authRequired:!1}];function c(t){window.history.pushState(null,"",t),i()}window.addEventListener("popstate",i);const a=h("#root");a.addEventListener("click",t=>{const e=t.target.closest("a");e instanceof HTMLAnchorElement&&e.href&&e.origin===window.location.origin&&(t.preventDefault(),c(new URL(e.href).pathname))});a.addEventListener("click",t=>{t.target.id==="logout"&&(r.logout(),c("/login"))});a.addEventListener("submit",t=>{t.preventDefault();const e=t.target;if(e.id==="login-form"){const o=e.querySelector("#username").value;r.login(o),c("/")}if(e.id==="profile-form"){const o=e.querySelector("#username").value,l=e.querySelector("#email").value,s=e.querySelector("#bio").value;r.setUser({username:o,email:l,bio:s}),i()}});function y(){const t=window.location.pathname,e=x.find(s=>s.path===t),o=r.loggedIn();return e!=null&&e.authRequired&&!o?(window.history.pushState(null,"","/login"),f()):o&&t==="/login"?(window.history.pushState(null,"","/"),m()):(e?e.component:v)()}function i(){a.innerHTML=y()}i();
+  `}const l={MAIN:"/",LOGIN:"/login",PROFILE:"/profile",NOT_FOUND:"*"},x=[{path:l.MAIN,component:h,authRequired:!1},{path:l.PROFILE,component:v,authRequired:!0},{path:l.LOGIN,component:g,authRequired:!1},{path:l.NOT_FOUND,component:f,authRequired:!1}];class y{constructor({guardRoute:t,getCurrentPath:s,navigate:r,eventType:o}){this.root=document.querySelector("#root"),this.routes=x,this.guardRoute=t,this.getCurrentPath=s,this.navigate=r,this.eventType=o,this.init()}render(t){this.root.innerHTML=t()}getRoute(t=this.getCurrentPath()){return this.routes.find(s=>s.path===t)||this.getRoute("*")}handleRouting(t=this.getCurrentPath()){const s=this.getRoute(t);if(!this.guardRoute){this.render(s.component);return}this.guardRoute(s,r=>{r&&r!==t?this.navigate(r,!0):this.render(s.component)})}push(t){this.navigate(t,!1)}replace(t){this.navigate(t,!0)}init(){window.addEventListener(this.eventType,()=>this.handleRouting()),this.handleRouting()}}class w extends y{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.pathname,navigate:(s,r)=>{window.history[r?"replaceState":"pushState"](null,"",s),window.dispatchEvent(new PopStateEvent("popstate"))},eventType:"popstate"})}}const d=new w({guardRoute:(e,t)=>{e.path===l.LOGIN&&n.loggedIn()?t(l.MAIN):e.authRequired&&!n.loggedIn()?t(l.LOGIN):t()}}),u=m("#root");u.addEventListener("click",e=>{e.target&&e.target.nodeName==="A"&&(e.preventDefault(),d.push(e.target.href.replace(location.origin,"")))});u.addEventListener("click",e=>{e.target&&e.target.id==="logout"&&(n.logout(),d.push(l.LOGIN))});u.addEventListener("submit",e=>{const t=e.target;if(t.id==="login-form"){e.preventDefault();const s=t.querySelector("#username").value;n.login(s),d.push(l.MAIN)}if(t.id==="profile-form"){e.preventDefault();const s=t.querySelector("#username").value,r=t.querySelector("#email").value,o=t.querySelector("#bio").value;n.setUser({username:s,email:r,bio:o})}});
