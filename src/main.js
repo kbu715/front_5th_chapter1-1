@@ -1,4 +1,4 @@
-import { $ } from "./dom";
+import { $ } from "./utils/dom";
 import { user } from "./store";
 import { ROUTES_MAP } from "./router/routes";
 import { BrowserRouter } from "./router/router";
