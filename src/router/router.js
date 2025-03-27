@@ -1,8 +1,9 @@
 import { ROUTES } from "./routes";
+import { $ } from "../utils/dom";
 
 export class BaseRouter {
   constructor({ guardRoute, getCurrentPath, navigate, eventType }) {
-    this.root = document.querySelector("#root");
+    this.root = $("#root");
     this.routes = ROUTES;
     this.guardRoute = guardRoute;
     this.getCurrentPath = getCurrentPath;
