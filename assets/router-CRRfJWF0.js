@@ -1,4 +1,4 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))o(s);new MutationObserver(s=>{for(const l of s)if(l.type==="childList")for(const n of l.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&o(n)}).observe(document,{childList:!0,subtree:!0});function e(s){const l={};return s.integrity&&(l.integrity=s.integrity),s.referrerPolicy&&(l.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?l.credentials="include":s.crossOrigin==="anonymous"?l.credentials="omit":l.credentials="same-origin",l}function o(s){if(s.ep)return;s.ep=!0;const l=e(s);fetch(s.href,l)}})();const y=r=>document.querySelector(r),i={loggedIn(){return!!this.getUser()},getUser(){const r=localStorage.getItem("user");return r?JSON.parse(r):null},setUser(r){const e={...this.getUser(),...r};localStorage.setItem("user",JSON.stringify(e))},login(r,t="",e=""){const o={username:r,email:t,bio:e};return localStorage.setItem("user",JSON.stringify(o)),o},logout(){localStorage.removeItem("user")}};function b(){return`
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const s of document.querySelectorAll('link[rel="modulepreload"]'))o(s);new MutationObserver(s=>{for(const l of s)if(l.type==="childList")for(const n of l.addedNodes)n.tagName==="LINK"&&n.rel==="modulepreload"&&o(n)}).observe(document,{childList:!0,subtree:!0});function e(s){const l={};return s.integrity&&(l.integrity=s.integrity),s.referrerPolicy&&(l.referrerPolicy=s.referrerPolicy),s.crossOrigin==="use-credentials"?l.credentials="include":s.crossOrigin==="anonymous"?l.credentials="omit":l.credentials="same-origin",l}function o(s){if(s.ep)return;s.ep=!0;const l=e(s);fetch(s.href,l)}})();const b=r=>document.querySelector(r),i={loggedIn(){return!!this.getUser()},getUser(){const r=localStorage.getItem("user");return r?JSON.parse(r):null},setUser(r){const e={...this.getUser(),...r};localStorage.setItem("user",JSON.stringify(e))},login(r,t="",e=""){const o={username:r,email:t,bio:e};return localStorage.setItem("user",JSON.stringify(o)),o},logout(){localStorage.removeItem("user")}};function m(){return`
     <main class="bg-gray-100 flex items-center justify-center min-h-screen">
       <div
         class="bg-white p-8 rounded-lg shadow-md w-full text-center"
@@ -18,7 +18,7 @@
         </a>
       </div>
     </main>
-  `}function m(){return`
+  `}function f(){return`
     <main class="bg-gray-100 flex items-center justify-center min-h-screen">
       <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
         <h1 class="text-2xl font-bold text-center text-blue-600 mb-8">
@@ -107,7 +107,7 @@
         ${o}
       </ul>
     </nav>
-  `}function f(){return`
+  `}function h(){return`
     <div class="bg-gray-100 min-h-screen flex justify-center">
       <div class="max-w-md w-full">
         ${d()} ${c()}
@@ -229,7 +229,7 @@
         ${u()}
       </div>
     </div>
-  `}function h(){const r=i.getUser(),{username:t,email:e,bio:o}=r||{};return`
+  `}function g(){const r=i.getUser(),{username:t,email:e,bio:o}=r||{};return`
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
         <div class="max-w-md w-full">
@@ -298,4 +298,4 @@ ${o??""}</textarea
         </div>
       </div>
     </div>
-  `}const g="/front_5th_chapter1-1";function v(r="/",t={}){const e=r.replace(/\/+$/,"");return Object.fromEntries(Object.entries(t).map(([o,s])=>s==="*"?[o,s]:[o,`${e}/${s.replace(/^\/+/,"")}`]))}const a=v(g,{HOME:"/",LOGIN:"/login",PROFILE:"/profile",NOT_FOUND:"*"}),x=[{path:a.HOME,component:f,authRequired:!1},{path:a.PROFILE,component:h,authRequired:!0},{path:a.LOGIN,component:m,authRequired:!1},{path:a.NOT_FOUND,component:b,authRequired:!1}];class p{constructor({guardRoute:t,getCurrentPath:e,navigate:o,eventType:s}){this.root=document.querySelector("#root"),this.routes=x,this.guardRoute=t,this.getCurrentPath=e,this.navigate=o,this.eventType=s,this.init()}render(t){this.root.innerHTML=t()}getRoute(t=this.getCurrentPath()){return this.routes.find(e=>e.path===t)||this.getRoute("*")}handleRouting(t=this.getCurrentPath()){const e=this.getRoute(t);if(!this.guardRoute){this.render(e.component);return}this.guardRoute(e,o=>{o&&o!==t?this.navigate(o,!0):this.render(e.component)})}push(t){this.navigate(t,!1)}replace(t){this.navigate(t,!0)}init(){window.addEventListener(this.eventType,()=>this.handleRouting()),this.handleRouting()}}class w extends p{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.pathname,navigate:(e,o)=>{window.history[o?"replaceState":"pushState"](null,"",e),window.dispatchEvent(new PopStateEvent("popstate"))},eventType:"popstate"})}}class O extends p{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.hash.replace(/^#\/?/,"/")||"/",navigate:e=>{location.hash=`#${e.replace(/^\/?/,"")}`},eventType:"hashchange"})}}export{y as $,w as B,O as H,a as R,i as u};
+  `}const v="/front_5th_chapter1-1";function x(r="/",t={}){const e=r.replace(/\/+$/,"");return Object.fromEntries(Object.entries(t).map(([o,s])=>s==="*"?[o,s]:[o,`${e}/${s.replace(/^\/+/,"")}`]))}const a=x(v,{HOME:"/",LOGIN:"/login",PROFILE:"/profile",NOT_FOUND:"*"}),y=[{path:a.HOME,component:h,authRequired:!1},{path:a.PROFILE,component:g,authRequired:!0},{path:a.LOGIN,component:f,authRequired:!1},{path:a.NOT_FOUND,component:m,authRequired:!1}];class p{constructor({guardRoute:t,getCurrentPath:e,navigate:o,eventType:s}){this.root=b("#root"),this.routes=y,this.guardRoute=t,this.getCurrentPath=e,this.navigate=o,this.eventType=s,this.init()}render(t){this.root.innerHTML=t()}getRoute(t=this.getCurrentPath()){return this.routes.find(e=>e.path===t)||this.getRoute("*")}handleRouting(t=this.getCurrentPath()){const e=this.getRoute(t);if(!this.guardRoute){this.render(e.component);return}this.guardRoute(e,o=>{o&&o!==t?this.navigate(o,!0):this.render(e.component)})}push(t){this.navigate(t,!1)}replace(t){this.navigate(t,!0)}init(){window.addEventListener(this.eventType,()=>this.handleRouting()),this.handleRouting()}}class w extends p{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.pathname,navigate:(e,o)=>{window.history[o?"replaceState":"pushState"](null,"",e),window.dispatchEvent(new PopStateEvent("popstate"))},eventType:"popstate"})}}class O extends p{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.hash.replace(/^#\/?/,"/")||"/",navigate:e=>{location.hash=`#${e.replace(/^\/?/,"")}`},eventType:"hashchange"})}}export{b as $,w as B,O as H,a as R,i as u};
