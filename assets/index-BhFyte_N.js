@@ -1,4 +1,4 @@
-(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const o of document.querySelectorAll('link[rel="modulepreload"]'))r(o);new MutationObserver(o=>{for(const a of o)if(a.type==="childList")for(const i of a.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&r(i)}).observe(document,{childList:!0,subtree:!0});function s(o){const a={};return o.integrity&&(a.integrity=o.integrity),o.referrerPolicy&&(a.referrerPolicy=o.referrerPolicy),o.crossOrigin==="use-credentials"?a.credentials="include":o.crossOrigin==="anonymous"?a.credentials="omit":a.credentials="same-origin",a}function r(o){if(o.ep)return;o.ep=!0;const a=s(o);fetch(o.href,a)}})();const m=e=>document.querySelector(e),n={loggedIn(){return!!this.getUser()},getUser(){const e=localStorage.getItem("user");return e?JSON.parse(e):null},setUser(e){const s={...this.getUser(),...e};localStorage.setItem("user",JSON.stringify(s))},login(e,t="",s=""){const r={username:e,email:t,bio:s};return localStorage.setItem("user",JSON.stringify(r)),r},logout(){localStorage.removeItem("user")}};function f(){return`
+(function(){const t=document.createElement("link").relList;if(t&&t.supports&&t.supports("modulepreload"))return;for(const r of document.querySelectorAll('link[rel="modulepreload"]'))o(r);new MutationObserver(r=>{for(const n of r)if(n.type==="childList")for(const i of n.addedNodes)i.tagName==="LINK"&&i.rel==="modulepreload"&&o(i)}).observe(document,{childList:!0,subtree:!0});function s(r){const n={};return r.integrity&&(n.integrity=r.integrity),r.referrerPolicy&&(n.referrerPolicy=r.referrerPolicy),r.crossOrigin==="use-credentials"?n.credentials="include":r.crossOrigin==="anonymous"?n.credentials="omit":n.credentials="same-origin",n}function o(r){if(r.ep)return;r.ep=!0;const n=s(r);fetch(r.href,n)}})();const m=e=>document.querySelector(e),a={loggedIn(){return!!this.getUser()},getUser(){const e=localStorage.getItem("user");return e?JSON.parse(e):null},setUser(e){const s={...this.getUser(),...e};localStorage.setItem("user",JSON.stringify(s))},login(e,t="",s=""){const o={username:e,email:t,bio:s};return localStorage.setItem("user",JSON.stringify(o)),o},logout(){localStorage.removeItem("user")}};function f(){return`
     <main class="bg-gray-100 flex items-center justify-center min-h-screen">
       <div
         class="bg-white p-8 rounded-lg shadow-md w-full text-center"
@@ -10,7 +10,10 @@
         <p class="text-gray-600 mb-8">
           요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.
         </p>
-        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
+        <a
+          href=${l.HOME}
+          class="bg-blue-600 text-white px-4 py-2 rounded font-bold"
+        >
           홈으로 돌아가기
         </a>
       </div>
@@ -72,7 +75,7 @@
     <footer class="bg-gray-200 p-4 text-center">
       <p>&copy; 2024 항해플러스. All rights reserved.</p>
     </footer>
-  `}function b(){const e=n.loggedIn(),t=window.location.pathname,s=o=>t===o,r=e?`
+  `}function b(){const e=a.loggedIn(),t=window.location.pathname,s=r=>t===r,o=e?`
         <li>
           <a
             href=${l.PROFILE}
@@ -96,12 +99,12 @@
       <ul class="flex justify-around">
         <li>
           <a
-            href=${l.MAIN}
-            class="${s(l.MAIN)?"text-blue-600 font-bold":"text-gray-600"}"
+            href=${l.HOME}
+            class="${s(l.HOME)?"text-blue-600 font-bold":"text-gray-600"}"
             >홈</a
           >
         </li>
-        ${r}
+        ${o}
       </ul>
     </nav>
   `}function h(){return`
@@ -226,7 +229,7 @@
         ${p()}
       </div>
     </div>
-  `}function v(){const e=n.getUser(),{username:t,email:s,bio:r}=e||{};return`
+  `}function v(){const e=a.getUser(),{username:t,email:s,bio:o}=e||{};return`
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
         <div class="max-w-md w-full">
@@ -278,7 +281,7 @@
                     rows="4"
                     class="w-full p-2 border rounded"
                   >
-${r??""}</textarea
+${o??""}</textarea
                   >
                 </div>
                 <button
@@ -295,4 +298,4 @@ ${r??""}</textarea
         </div>
       </div>
     </div>
-  `}const l={MAIN:"/",LOGIN:"/login",PROFILE:"/profile",NOT_FOUND:"*"},x=[{path:l.MAIN,component:h,authRequired:!1},{path:l.PROFILE,component:v,authRequired:!0},{path:l.LOGIN,component:g,authRequired:!1},{path:l.NOT_FOUND,component:f,authRequired:!1}];class y{constructor({guardRoute:t,getCurrentPath:s,navigate:r,eventType:o}){this.root=document.querySelector("#root"),this.routes=x,this.guardRoute=t,this.getCurrentPath=s,this.navigate=r,this.eventType=o,this.init()}render(t){this.root.innerHTML=t()}getRoute(t=this.getCurrentPath()){return this.routes.find(s=>s.path===t)||this.getRoute("*")}handleRouting(t=this.getCurrentPath()){const s=this.getRoute(t);if(!this.guardRoute){this.render(s.component);return}this.guardRoute(s,r=>{r&&r!==t?this.navigate(r,!0):this.render(s.component)})}push(t){this.navigate(t,!1)}replace(t){this.navigate(t,!0)}init(){window.addEventListener(this.eventType,()=>this.handleRouting()),this.handleRouting()}}class w extends y{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.pathname,navigate:(s,r)=>{window.history[r?"replaceState":"pushState"](null,"",s),window.dispatchEvent(new PopStateEvent("popstate"))},eventType:"popstate"})}}const d=new w({guardRoute:(e,t)=>{e.path===l.LOGIN&&n.loggedIn()?t(l.MAIN):e.authRequired&&!n.loggedIn()?t(l.LOGIN):t()}}),u=m("#root");u.addEventListener("click",e=>{e.target&&e.target.nodeName==="A"&&(e.preventDefault(),d.push(e.target.href.replace(location.origin,"")))});u.addEventListener("click",e=>{e.target&&e.target.id==="logout"&&(n.logout(),d.push(l.LOGIN))});u.addEventListener("submit",e=>{const t=e.target;if(t.id==="login-form"){e.preventDefault();const s=t.querySelector("#username").value;n.login(s),d.push(l.MAIN)}if(t.id==="profile-form"){e.preventDefault();const s=t.querySelector("#username").value,r=t.querySelector("#email").value,o=t.querySelector("#bio").value;n.setUser({username:s,email:r,bio:o})}});
+  `}const x="/front_5th_chapter1-1";function y(e="/",t={}){const s=e.replace(/\/+$/,"");return Object.fromEntries(Object.entries(t).map(([o,r])=>r==="*"?[o,r]:[o,`${s}/${r.replace(/^\/+/,"")}`]))}const l=y(x,{HOME:"/",LOGIN:"/login",PROFILE:"/profile",NOT_FOUND:"*"}),w=[{path:l.HOME,component:h,authRequired:!1},{path:l.PROFILE,component:v,authRequired:!0},{path:l.LOGIN,component:g,authRequired:!1},{path:l.NOT_FOUND,component:f,authRequired:!1}];class O{constructor({guardRoute:t,getCurrentPath:s,navigate:o,eventType:r}){this.root=document.querySelector("#root"),this.routes=w,this.guardRoute=t,this.getCurrentPath=s,this.navigate=o,this.eventType=r,this.init()}render(t){this.root.innerHTML=t()}getRoute(t=this.getCurrentPath()){return this.routes.find(s=>s.path===t)||this.getRoute("*")}handleRouting(t=this.getCurrentPath()){const s=this.getRoute(t);if(!this.guardRoute){this.render(s.component);return}this.guardRoute(s,o=>{o&&o!==t?this.navigate(o,!0):this.render(s.component)})}push(t){this.navigate(t,!1)}replace(t){this.navigate(t,!0)}init(){window.addEventListener(this.eventType,()=>this.handleRouting()),this.handleRouting()}}class R extends O{constructor({guardRoute:t}){super({guardRoute:t,getCurrentPath:()=>location.pathname,navigate:(s,o)=>{window.history[o?"replaceState":"pushState"](null,"",s),window.dispatchEvent(new PopStateEvent("popstate"))},eventType:"popstate"})}}const d=new R({guardRoute:(e,t)=>{e.path===l.LOGIN&&a.loggedIn()?t(l.HOME):e.authRequired&&!a.loggedIn()?t(l.LOGIN):t()}}),u=m("#root");u.addEventListener("click",e=>{e.target&&e.target.nodeName==="A"&&(e.preventDefault(),d.push(e.target.href.replace(location.origin,"")))});u.addEventListener("click",e=>{e.target&&e.target.id==="logout"&&(a.logout(),d.push(l.LOGIN))});u.addEventListener("submit",e=>{const t=e.target;if(t.id==="login-form"){e.preventDefault();const s=t.querySelector("#username").value;a.login(s),d.push(l.HOME)}if(t.id==="profile-form"){e.preventDefault();const s=t.querySelector("#username").value,o=t.querySelector("#email").value,r=t.querySelector("#bio").value;a.setUser({username:s,email:o,bio:r})}});
