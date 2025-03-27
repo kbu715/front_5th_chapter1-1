@@ -4,14 +4,13 @@ import { Nav } from "../components/Nav.js";
 import { user } from "../store/index.js";
 
 export function ProfilePage() {
-  const loggedIn = user.loggedIn();
   const userData = user.getUser();
   const { username, email, bio } = userData || {};
   return /* HTML */ `
     <div id="root">
       <div class="bg-gray-100 min-h-screen flex justify-center">
         <div class="max-w-md w-full">
-          ${Header()} ${Nav({ loggedIn })}
+          ${Header()} ${Nav()}
 
           <main class="p-4">
             <div class="bg-white p-8 rounded-lg shadow-md">
