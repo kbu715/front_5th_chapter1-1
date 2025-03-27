@@ -1,102 +1,52 @@
-import { MainPage } from "./pages/MainPage";
-import { ProfilePage } from "./pages/ProfilePage";
-import { LoginPage } from "./pages/LoginPage";
-import { ErrorPage } from "./pages/ErrorPage";
 import { $ } from "./dom";
 import { user } from "./store";
+import { ROUTES_MAP } from "./router/routes";
+import { BrowserRouter } from "./router/router";
 
-const routes = [
-  {
-    path: "/",
-    component: MainPage,
-    authRequired: false,
+const router = new BrowserRouter({
+  guardRoute: (route, next) => {
+    if (route.path === ROUTES_MAP.LOGIN && user.loggedIn()) {
+      next(ROUTES_MAP.MAIN);
+    } else if (route.authRequired && !user.loggedIn()) {
+      next(ROUTES_MAP.LOGIN);
+    } else {
+      next();
+    }
   },
-  {
-    path: "/profile",
-    component: ProfilePage,
-    authRequired: true,
-  },
-  {
-    path: "/login",
-    component: LoginPage,
-    authRequired: false,
-  },
-];
+});
 
-function navigate(pathname) {
-  window.history.pushState(null, "", pathname);
-  render();
-}
+const root = $("#root");
 
-window.addEventListener("popstate", render);
-
-const $root = $("#root");
-
-$root.addEventListener("click", (e) => {
-  const target = e.target.closest("a");
-
-  if (
-    target instanceof HTMLAnchorElement &&
-    target.href &&
-    target.origin === window.location.origin
-  ) {
+root.addEventListener("click", (e) => {
+  if (e.target && e.target.nodeName === "A") {
     e.preventDefault();
-    navigate(new URL(target.href).pathname);
+    router.push(e.target.href.replace(location.origin, ""));
   }
 });
 
-$root.addEventListener("click", (e) => {
-  if (e.target.id === "logout") {
+root.addEventListener("click", (e) => {
+  if (e.target && e.target.id === "logout") {
     user.logout();
-
-    navigate("/login");
+    router.push(ROUTES_MAP.LOGIN);
   }
 });
 
-$root.addEventListener("submit", (e) => {
-  e.preventDefault();
-
+root.addEventListener("submit", (e) => {
   const $form = e.target;
 
   if ($form.id === "login-form") {
+    e.preventDefault();
     const username = $form.querySelector("#username").value;
-
     user.login(username);
-
-    navigate("/");
+    router.push(ROUTES_MAP.MAIN);
   }
 
   if ($form.id === "profile-form") {
+    e.preventDefault();
     const username = $form.querySelector("#username").value;
     const email = $form.querySelector("#email").value;
     const bio = $form.querySelector("#bio").value;
 
     user.setUser({ username, email, bio });
-    render();
   }
 });
-
-function App() {
-  const pathname = window.location.pathname;
-  const route = routes.find((route) => route.path === pathname);
-  const loggedIn = user.loggedIn();
-
-  if (route?.authRequired && !loggedIn) {
-    window.history.pushState(null, "", "/login");
-    return LoginPage();
-  }
-
-  if (loggedIn && pathname === "/login") {
-    window.history.pushState(null, "", "/");
-    return MainPage();
-  }
-
-  const Comp = route ? route.component : ErrorPage;
-  return Comp();
-}
-
-function render() {
-  $root.innerHTML = App();
-}
-
-render();

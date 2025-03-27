@@ -1,35 +1,34 @@
-import { MainPage } from "./pages/MainPage";
-import { ProfilePage } from "./pages/ProfilePage";
-import { LoginPage } from "./pages/LoginPage";
-import { ErrorPage } from "./pages/ErrorPage";
 import { $ } from "./dom";
+import { HashRouter } from "./router/router";
+import { ROUTES_MAP } from "./router/routes";
 import { user } from "./store";
 
-const routes = [
-  { hash: "#/", component: MainPage, authRequired: false },
-  { hash: "#/login", component: LoginPage, authRequired: false },
-  { hash: "#/profile", component: ProfilePage, authRequired: true },
-];
-
-const navigate = (pathname) => {
-  location.hash = pathname;
-};
+const router = new HashRouter({
+  guardRoute: (route, next) => {
+    if (route.path === ROUTES_MAP.LOGIN && user.loggedIn()) {
+      next(ROUTES_MAP.MAIN);
+    } else if (route.authRequired && !user.loggedIn()) {
+      next(ROUTES_MAP.LOGIN);
+    } else {
+      next();
+    }
+  },
+});
 
 const $root = $("#root");
 
 $root.addEventListener("click", (e) => {
   if (e.target && e.target.nodeName === "A") {
     e.preventDefault();
-
-    navigate(e.target.href.replace(location.origin, ""));
+    console.log(e.target.href.replace(location.origin, ""));
+    router.push(e.target.href.replace(location.origin, ""));
   }
 });
 
 $root.addEventListener("click", (e) => {
   if (e.target && e.target.id === "logout") {
     user.logout();
-    navigate("#/login");
-    render();
+    router.push(ROUTES_MAP.LOGIN);
   }
 });
 
@@ -37,11 +36,8 @@ $root.addEventListener("submit", (e) => {
   if (e.target && e.target.id === "login-form") {
     e.preventDefault();
     const username = e.target.querySelector("#username").value;
-
     user.login(username);
-
-    navigate("#/");
-    render();
+    router.push(ROUTES_MAP.MAIN);
   }
 
   if (e.target && e.target.id === "profile-form") {
@@ -51,37 +47,5 @@ $root.addEventListener("submit", (e) => {
     const bio = e.target.querySelector("#bio").value;
 
     user.setUser({ username, email, bio });
-    render();
   }
 });
-
-const App = () => {
-  const { hash } = location;
-
-  const route = routes.find((route) => route.hash === hash);
-  const loggedIn = user.loggedIn();
-
-  if (!route) {
-    return ErrorPage();
-  }
-
-  if (route?.authRequired && !loggedIn) {
-    location.hash = "#/login";
-    return LoginPage();
-  }
-
-  if (hash === "#/login" && loggedIn) {
-    location.hash = "#/";
-    return MainPage();
-  }
-
-  return route?.component();
-};
-
-const render = () => {
-  $root.innerHTML = App();
-};
-
-render();
-
-window.addEventListener("hashchange", render);
