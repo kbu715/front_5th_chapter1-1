@@ -39,8 +39,8 @@ export function Nav() {
       <ul class="flex justify-around">
         <li>
           <a
-            href=${ROUTES_MAP.MAIN}
-            class="${getActiveClassName(ROUTES_MAP.MAIN)
+            href=${ROUTES_MAP.HOME}
+            class="${getActiveClassName(ROUTES_MAP.HOME)
               ? "text-blue-600 font-bold"
               : "text-gray-600"}"
             >홈</a

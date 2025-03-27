@@ -4,7 +4,7 @@ import { MainPage } from "../pages/MainPage";
 import { ProfilePage } from "../pages/ProfilePage";
 
 export const ROUTES_MAP = {
-  MAIN: "/",
+  HOME: "/",
   LOGIN: "/login",
   PROFILE: "/profile",
   NOT_FOUND: "*",
@@ -12,7 +12,7 @@ export const ROUTES_MAP = {
 
 export const ROUTES = [
   {
-    path: ROUTES_MAP.MAIN,
+    path: ROUTES_MAP.HOME,
     component: MainPage,
     authRequired: false,
   },

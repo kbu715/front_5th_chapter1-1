@@ -1,3 +1,5 @@
+import { ROUTES_MAP } from "../router/routes";
+
 export function ErrorPage() {
   return /* HTML */ `
     <main class="bg-gray-100 flex items-center justify-center min-h-screen">
@@ -11,7 +13,10 @@ export function ErrorPage() {
         <p class="text-gray-600 mb-8">
           요청하신 페이지가 존재하지 않거나 이동되었을 수 있습니다.
         </p>
-        <a href="/" class="bg-blue-600 text-white px-4 py-2 rounded font-bold">
+        <a
+          href=${ROUTES_MAP.HOME}
+          class="bg-blue-600 text-white px-4 py-2 rounded font-bold"
+        >
           홈으로 돌아가기
         </a>
       </div>

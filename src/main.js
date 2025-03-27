@@ -6,7 +6,7 @@ import { BrowserRouter } from "./router/router";
 const router = new BrowserRouter({
   guardRoute: (route, next) => {
     if (route.path === ROUTES_MAP.LOGIN && user.loggedIn()) {
-      next(ROUTES_MAP.MAIN);
+      next(ROUTES_MAP.HOME);
     } else if (route.authRequired && !user.loggedIn()) {
       next(ROUTES_MAP.LOGIN);
     } else {
@@ -38,7 +38,7 @@ root.addEventListener("submit", (e) => {
     e.preventDefault();
     const username = $form.querySelector("#username").value;
     user.login(username);
-    router.push(ROUTES_MAP.MAIN);
+    router.push(ROUTES_MAP.HOME);
   }
 
   if ($form.id === "profile-form") {

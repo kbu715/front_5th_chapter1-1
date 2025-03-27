@@ -73,7 +73,7 @@ export class HashRouter extends BaseRouter {
   constructor({ guardRoute }) {
     super({
       guardRoute,
-      getCurrentPath: () => location.hash.replace(/^#\/?/, "/"),
+      getCurrentPath: () => location.hash.replace(/^#\/?/, "/") || "/",
       navigate: (path) => {
         location.hash = `#${path.replace(/^\/?/, "")}`;
       },
